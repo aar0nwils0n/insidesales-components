@@ -7,6 +7,8 @@ import { colors, typography, boxShadows } from '../styles';
 
 import { OverflowWrapper } from './SelectInputThemes';
 
+import Checkbox from '../Checkbox';
+
 import TextInput from '../TextInput';
 
 export const SelectOptionHeight = 36;
@@ -99,6 +101,8 @@ const SelectOptionsWrapper = styled.div`
 `;
 
 const SelectOption = styled.div`
+  display: flex;
+  align-items: center;
   ${typography.subhead1}
   width: 100%;
   line-height: ${(props) => {
@@ -155,14 +159,6 @@ const PromotedOptions = styled.div`
   width: 100%;
 `;
 
-const SearchInput = (props) => {
-  const SearchTextInput = styled(TextInput)` 
-    padding: 0 24px;
-  `;
-
-  return (<SearchTextInput {...props} />);
-}
-
 class SelectOptions extends React.Component {
 
   constructor() {
@@ -173,12 +169,15 @@ class SelectOptions extends React.Component {
   }
 
   optionElement = (keyID, value, optionDisplayItem, disabled) => {
-    const { onOptionUpdate, options, promotedOptions } = this.props;
+    const { onOptionUpdate, options, promotedOptions, multiSelect, selectedOptions } = this.props;
     const clonedOptionItem = typeof (optionDisplayItem) === 'string' ? <OverflowWrapper>{optionDisplayItem}</OverflowWrapper> : optionDisplayItem;
     const optionsLength = _.get(options, 'length', 0) + _.get(promotedOptions, 'length', 0);
     const delay = {
       transition: `opacity 0.3s ease-in-out ${((keyID + 1) / (optionsLength + 1)) * 0.284}s, background 0.2s ease-in-out`
     };
+
+    const optionSelected = multiSelect && _.includes(selectedOptions, value);
+
     return (
       <SelectOption
         className={'pb-option'}
@@ -192,6 +191,15 @@ class SelectOptions extends React.Component {
             onOptionUpdate(value);
           }
         }}>
+          {multiSelect &&
+          <Checkbox
+            checked={optionSelected}
+            onClick={() => {
+              if (!disabled) {
+                onOptionUpdate(value);
+              }
+            }}/>
+          }
           {clonedOptionItem}
         </SelectOption>
     );
@@ -223,13 +231,15 @@ class SelectOptions extends React.Component {
     if (!this.props.searchable) return null;
 
     return (
-      <SearchInput
-        label="Label"
-        name="selectSearch"
-        onChange={this.props.onSearch}
-        visible={this.props.visible}
-        search
-      />
+      <div style={{padding: '0 24px'}}  >
+        <TextInput
+          label="Label"
+          name="selectSearch"
+          onChange={this.props.onSearch}
+          visible={this.props.visible}
+          search
+        />
+      </div>
     );
   }
 
@@ -261,6 +271,7 @@ SelectOptions.propTypes = {
   options: PropTypes.array.isRequired,
   optionsCount: PropTypes.number.isRequired,
   visible: PropTypes.bool.isRequired,
+  multiSelect: PropTypes.bool,
   promotedOptions: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.any,
     label: PropTypes.string,
@@ -272,7 +283,8 @@ SelectOptions.defaultProps = {
   onClick: () => {},
   options: [],
   optionsCount: 0,
-  visible: false
+  visible: false,
+  multiSelect: false
 };
 
 export default SelectOptions;

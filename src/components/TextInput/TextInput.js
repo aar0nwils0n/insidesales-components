@@ -44,7 +44,7 @@ const Caret = styled.div`
   }
 `;
 
-const TextBox = styled.div`
+export const TextBox = styled.div`
   background-color: ${colors.white};
   border-bottom: thin solid ${colors.black40};
   border-color: ${(props) => {
@@ -54,6 +54,8 @@ const TextBox = styled.div`
         return colors.green;
     } else if (props.disabled) {
       return colors.black20;
+    } else if (props.lineColor) {
+      return props.lineColor;
     }
     return colors.black40;
   }};
@@ -109,7 +111,7 @@ const TextBox = styled.div`
   }}
 `;
 
-const InputItem = styled.input`
+export const InputItem = styled.input`
   background-color: transparent;
   border: none;
   box-sizing: border-box;
@@ -127,12 +129,14 @@ const InputItem = styled.input`
   ${darkScrollbar}
 `;
 
-const TextLabel = styled.label`
+export const TextLabel = styled.label`
   color: ${(props) => {
       if (props.error) {
         return colors.red;
       } else if (props.isFocused) {
         return colors.green;
+      } else if (props.labelColor) {
+        return props.labelColor;
       } else {
         return colors.black60;
       }
@@ -186,7 +190,7 @@ class TextInput extends React.Component {
   }
 
   checkDocumentEvent = checkDocumentEvent.bind(this)
-  
+
   openOptionsList = openOptionsList.bind(this)
 
   closeOptionsList = closeOptionsList.bind(this)
@@ -272,7 +276,7 @@ class TextInput extends React.Component {
     }
 
     this.setState({
-      value: get(e, 'target.value', this.textInputEl.value)
+      value: get(e, 'target.value', this.textInputEl.value),
     }, this.handleValueChange);
   }
 
@@ -288,7 +292,7 @@ class TextInput extends React.Component {
   }
 
   render() {
-    const { label, name, error, disabled, collapsed, className, options, promotedOptions, lowPadding } = this.props;
+    const { label, name, error, disabled, collapsed, className, options, promotedOptions, lowPadding, labelColor, lineColor } = this.props;
     return (
       <TextInputWrapper className={className}>
         <TextBox
@@ -300,6 +304,7 @@ class TextInput extends React.Component {
           error={error}
           open={this.state.value}
           disabled={disabled}
+          lineColor={lineColor}
           collapsed={collapsed}>
           <InputItem
             type='text'
@@ -317,7 +322,7 @@ class TextInput extends React.Component {
             <SearchIcon fill={colors.dustyGray} size={{ width: 22, height: 22 }} />
           }
           { !this.props.search &&
-            <TextLabel isFocused={this.state.focused} open={this.state.value} htmlFor={name} error={error}>{label}</TextLabel>
+            <TextLabel isFocused={this.state.focused} labelColor={labelColor} open={this.state.value} htmlFor={name} error={error}>{label}</TextLabel>
           }
         </TextBox>
         { options && <Caret onClick={this.toggleOptionsList} className={'pb-caret'} />}
@@ -328,7 +333,7 @@ class TextInput extends React.Component {
           promotedOptions={promotedOptions || this.getPromotedOptions() }
           options={options}
           optionsCount={options.length}
-          visible={this.state.optionsListVisible} 
+          visible={this.state.optionsListVisible}
           lowPadding={lowPadding}
         />}
       </TextInputWrapper>
@@ -360,7 +365,7 @@ TextInput.propTypes = {
     value: PropTypes.any,
     label: PropTypes.string,
     disabled: PropTypes.bool
-  })) 
+  }))
 };
 
 export default TextInput;

@@ -300,7 +300,7 @@ class TextInput extends React.Component {
     return (
       <TextInputWrapper
         className={className}
-        ref="clickEventElement">
+        ref={(el) => { this.clickEventElement = el }}>
         <TextBox
           onMouseUp={this.removeCancelBlur}
           onMouseDown={this.cancelBlur}

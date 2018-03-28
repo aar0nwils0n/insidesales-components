@@ -155,6 +155,7 @@ storiesOf('Form', module)
                     label="Country"
                     name="Country"
                     lowPadding={true}
+                    selectOptionsWidth={400}
                     onChange={action('value')}
                     options={[
                       {

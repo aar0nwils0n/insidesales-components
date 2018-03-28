@@ -23,7 +23,7 @@ const SelectOptionsContainer = styled.div`
     if (props.theme.optionListPosition) return props.theme.optionListPosition;
     return 'calc(100%)';
   }};
-  width: 100%;
+  width: ${props => props.width ? `${props.width}px` : '100%'};
   z-index: 2;
   box-shadow: ${(props) => {
     if (props.theme.optionsListShadow && props.visible) return props.theme.optionsListShadow;

@@ -189,13 +189,13 @@ class TextInput extends React.Component {
     };
   }
 
-  checkDocumentEvent = checkDocumentEvent.bind(this)
+  checkDocumentEvent = (e) => { checkDocumentEvent.call(this, e) }
 
-  openOptionsList = openOptionsList.bind(this)
+  openOptionsList = () => { openOptionsList.call(this) }
 
-  closeOptionsList = closeOptionsList.bind(this)
+  closeOptionsList = () => { closeOptionsList.call(this) }
 
-  toggleOptionsList = toggleOptionsList.bind(this)
+  toggleOptionsList = () => { toggleOptionsList.call(this) }
 
   componentDidMount() {
     const {value} = this.props;
@@ -288,13 +288,19 @@ class TextInput extends React.Component {
   }
 
   getPromotedOptions = () => {
-    return this.state.value ? filter(this.props.options, o => o.value.toLowerCase().indexOf(this.state.value.toLowerCase()) > -1) : [];
+    return this.state.value
+      ? filter(this.props.options, o =>
+        o.value.toLowerCase().indexOf(this.state.value.toLowerCase()) > -1 ||
+        o.label.toLowerCase().indexOf(this.state.value.toLowerCase()) > -1)
+      : [];
   }
 
   render() {
     const { label, name, error, disabled, collapsed, className, options, promotedOptions, lowPadding, labelColor, lineColor } = this.props;
     return (
-      <TextInputWrapper className={className}>
+      <TextInputWrapper
+        className={className}
+        ref="clickEventElement">
         <TextBox
           onMouseUp={this.removeCancelBlur}
           onMouseDown={this.cancelBlur}
@@ -328,13 +334,13 @@ class TextInput extends React.Component {
         { options && <Caret onClick={this.toggleOptionsList} className={'pb-caret'} />}
         {this.renderHelperText()}
         { options && <SelectOptions
-          ref={(options) => { this.clickEventElement = options; }}
           onOptionUpdate={this.onDropDownSelect}
           promotedOptions={promotedOptions || this.getPromotedOptions() }
           options={options}
           optionsCount={options.length}
           visible={this.state.optionsListVisible}
           lowPadding={lowPadding}
+          width={this.props.selectOptionsWidth}
         />}
       </TextInputWrapper>
     );
@@ -356,6 +362,7 @@ TextInput.propTypes = {
   onChange: PropTypes.func,
   collapsed: PropTypes.bool,
   lowPadding: PropTypes.bool,
+  selectOptionsWidth: PropTypes.number,
   options: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.any,
     label: PropTypes.string,

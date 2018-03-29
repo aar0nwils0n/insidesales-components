@@ -28,6 +28,8 @@ const Caret = styled.div`
   cursor: pointer;
   height: 32px;
 
+
+
   &::after {
     content: '';
     position: absolute;
@@ -40,7 +42,7 @@ const Caret = styled.div`
     margin: auto;
     border-left: 5px transparent solid;
     border-right: 5px transparent solid;
-    border-top: 5px ${colors.black40} solid;
+    border-${props => props.open ? 'bottom' : 'top'}: 5px ${colors.black40} solid;
   }
 `;
 
@@ -270,14 +272,24 @@ class TextInput extends React.Component {
     }
   }
 
+  scrollToTop() {
+    ReactDOM.findDOMNode(this.optionsRef).scrollTop = 0;
+  }
+
   onChange = (e) => {
     if (e) {
       e.preventDefault();
     }
 
+    if(!this.state.optionsListVisible) {
+      this.toggleOptionsList();
+    }
+
     this.setState({
       value: get(e, 'target.value', this.textInputEl.value),
     }, this.handleValueChange);
+
+    this.scrollToTop();
   }
 
   onDropDownSelect = (value) => {
@@ -287,11 +299,28 @@ class TextInput extends React.Component {
     this.closeOptionsList();
   }
 
+  findBestOptionIndex(opt = '', value) {
+    const valIndex = opt.value.toLowerCase().indexOf(value);
+    const labelIndex = opt.label.toLowerCase().indexOf(value);
+
+    if(valIndex === -1 && labelIndex !== -1) {
+      return labelIndex;
+    }
+
+    if(labelIndex === -1 && valIndex !== -1) {
+      return valIndex;
+    }
+
+    return labelIndex > valIndex ? valIndex : labelIndex
+  }
+
   getPromotedOptions = () => {
+    const lowerValue = this.state.value.toLowerCase();
     return this.state.value
       ? filter(this.props.options, o =>
-        o.value.toLowerCase().indexOf(this.state.value.toLowerCase()) > -1 ||
-        o.label.toLowerCase().indexOf(this.state.value.toLowerCase()) > -1)
+          o.value.toLowerCase().indexOf(lowerValue) > -1 ||
+          o.label.toLowerCase().indexOf(lowerValue) > -1)
+        .sort((a, b) => this.findBestOptionIndex(a, lowerValue) - this.findBestOptionIndex(b, lowerValue))
       : [];
   }
 
@@ -331,7 +360,7 @@ class TextInput extends React.Component {
             <TextLabel isFocused={this.state.focused} labelColor={labelColor} open={this.state.value} htmlFor={name} error={error}>{label}</TextLabel>
           }
         </TextBox>
-        { options && <Caret onClick={this.toggleOptionsList} className={'pb-caret'} />}
+        { options && <Caret onClick={this.toggleOptionsList} open={this.state.optionsListVisible} className={'pb-caret'} />}
         {this.renderHelperText()}
         { options && <SelectOptions
           onOptionUpdate={this.onDropDownSelect}
@@ -341,6 +370,9 @@ class TextInput extends React.Component {
           visible={this.state.optionsListVisible}
           lowPadding={lowPadding}
           width={this.props.selectOptionsWidth}
+          optionsRef={(ref) => {
+            this.optionsRef = ref;
+          }}
         />}
       </TextInputWrapper>
     );

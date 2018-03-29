@@ -273,7 +273,9 @@ class TextInput extends React.Component {
   }
 
   scrollToTop() {
-    ReactDOM.findDOMNode(this.optionsRef).scrollTop = 0;
+    if(get(ReactDOM.findDOMNode(this.optionsRef), 'scrollTop', false)) {
+      ReactDOM.findDOMNode(this.optionsRef).scrollTop = 0;
+    }
   }
 
   onChange = (e) => {

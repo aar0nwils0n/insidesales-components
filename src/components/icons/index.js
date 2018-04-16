@@ -58,7 +58,6 @@ import TaskIcons from './TaskIcons';
 import TemplateIcon from './TemplateIcon';
 import TrashIcon from './TrashIcon';
 import ImportIcon from './ImportIcon';
-import MoreInfoIcon from './MoreInfoIcon';
 import StarFilledIcon from './StarFilledIcon';
 import TagsIcon from './TagsIcon';
 import TeamsIcon from './TeamsIcon';
@@ -124,7 +123,6 @@ module.exports = {
   TemplateIcon,
   TrashIcon,
   ImportIcon,
-  MoreInfoIcon,
   StarFilledIcon,
   TagsIcon,
   TeamsIcon

@@ -23,7 +23,7 @@ const SelectOptionsContainer = styled.div`
     if (props.theme.optionListPosition) return props.theme.optionListPosition;
     return 'calc(100%)';
   }};
-  width: 100%;
+  width: ${props => props.width ? `${props.width}px` : '100%'};
   z-index: 2;
   box-shadow: ${(props) => {
     if (props.theme.optionsListShadow && props.visible) return props.theme.optionsListShadow;
@@ -154,8 +154,8 @@ const SelectOption = styled.div`
 `;
 
 const PromotedOptions = styled.div`
-  border-bottom: ${props => props.listLength === 0 ? '0' : `1px solid ${colors.barLightGray}`};
-  margin-bottom: 8px;
+  border-bottom: ${props => (props.listLength === 0 || props.hideDivider) ? '0' : `1px solid ${colors.barLightGray}`};
+  margin-bottom: ${props => props.hideDivider ? '0' : '8px'};
   width: 100%;
 `;
 
@@ -217,10 +217,10 @@ class SelectOptions extends React.Component {
   };
 
   renderPromotedOptions = () => {
-    const { promotedOptions } = this.props;
+    const { promotedOptions, hideDivider } = this.props;
     if (_.get(promotedOptions, 'length')) {
       return (
-        <PromotedOptions listLength={_.size(promotedOptions)}>
+        <PromotedOptions listLength={_.size(promotedOptions)} hideDivider={hideDivider}>
           { promotedOptions.map((option, idx) => this.optionElement(idx, option.value, option.label, option.disabled)) }
         </PromotedOptions>
       );
@@ -254,8 +254,12 @@ class SelectOptions extends React.Component {
 
   render() {
     return (
-      <SelectOptionsContainer dirty={this.state.inputUsed} {...this.props}>
-        <SelectOptionsWrapper {...this.props} ref={(el) => { this.optionWrapperEl = el; }}>
+      <SelectOptionsContainer
+      dirty={this.state.inputUsed}
+      {...this.props}
+      ref={this.props.optionsRef}
+      >
+        <SelectOptionsWrapper {...this.props}>
           {this.renderSearch()}
           {this.renderPromotedOptions()}
           {this.renderOptions()}
@@ -269,9 +273,11 @@ SelectOptions.propTypes = {
   onClick: PropTypes.func.isRequired,
   promotedOption: PropTypes.objectOf(PropTypes.string),
   options: PropTypes.array.isRequired,
+  hideDivider: PropTypes.bool,
   optionsCount: PropTypes.number.isRequired,
   visible: PropTypes.bool.isRequired,
   multiSelect: PropTypes.bool,
+  optionsRef: PropTypes.func,
   promotedOptions: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.any,
     label: PropTypes.string,
@@ -280,11 +286,12 @@ SelectOptions.propTypes = {
 };
 
 SelectOptions.defaultProps = {
-  onClick: () => {},
+  onClick: _.noop,
   options: [],
   optionsCount: 0,
   visible: false,
-  multiSelect: false
+  multiSelect: false,
+  optionsRef: _.noop,
 };
 
 export default SelectOptions;

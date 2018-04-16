@@ -41,7 +41,9 @@ import MessageAlertIcon from './MessageAlertIcon';
 import MessageBulletedIcon from './MessageBulletedIcon';
 import MicrosoftIcon from './MicrosoftIcon';
 import MinimizeIcon from './MinimizeIcon';
+import MinusIcon from './MinusIcon';
 import MoreVertIcon from './MoreVertIcon';
+import MoveIcon from './MoveIcon';
 import NotificationBellIcon from './NotificationBellIcon';
 import OtherFilledIcon from './OtherFilledIcon';
 import PauseCircleIcon from './PauseCircleIcon';
@@ -49,10 +51,12 @@ import PersonIcon from './PersonIcon';
 import PhoneFilledIcon from './PhoneFilledIcon';
 import PlayIcon from './PlayIcon';
 import CallbackIcon from './CallbackIcon';
+import ReminderIcon from './ReminderIcon';
 import SearchMaterialIcon from './SearchMaterialIcon';
 import SkipIcon from './SkipIcon';
 import TaskIcons from './TaskIcons';
 import TemplateIcon from './TemplateIcon';
+import TrashIcon from './TrashIcon';
 
 module.exports = {
   AddCircleIcon,
@@ -93,6 +97,8 @@ module.exports = {
   LinkedinSocialIcon,
   LinkIcon,
   MenuIcon,
+  MinusIcon,
+  MoveIcon,
   LogoutIcon,
   MergeFieldIcon,
   MessageAlertIcon,
@@ -106,8 +112,10 @@ module.exports = {
   PersonIcon,
   PhoneFilledIcon,
   PlayIcon,
+  ReminderIcon,
   SearchMaterialIcon,
   SkipIcon,
   TaskIcons,
   TemplateIcon,
+  TrashIcon,
 };

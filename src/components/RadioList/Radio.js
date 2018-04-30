@@ -4,19 +4,18 @@ import styled, { css } from 'styled-components';
 
 import { colors } from '../styles/colors';
 import { typography } from '../styles/typography';
-
 const size = 16;
 
 const RadioLabel = styled.label`
   ${typography.bodyCompact};
-  background: ${colors.galeryGray};
+  background: ${props => props.theme.background};
   color: ${colors.black50};
   display: block;
   padding: 0.75em;
-  margin: 0.5em 0;
+  margin: ${props => props.theme.margin} 0;
   
   ${props => props.active && css`
-    background: ${colors.white79green};
+    background: ${props => props.theme.backgroundFocused};
     color: ${colors.black80};
   `}
 `;
@@ -30,12 +29,17 @@ const RadioCircle = styled.span`
   height: ${size}px;
   border-radius: 50%;
   display: inline-block;
-  border: 2px solid black;
+  border: 2px solid ${props => props.theme.lightRadio ? colors.black40 : colors.black};
   position: relative;
   vertical-align: middle;
   margin-right: 0.5em;
   background: white;
   box-sizing: content-box;
+
+  ${props => props.theme.lightRadio && props.active && `
+    border-color: ${colors.green};
+  `};
+
   
   ${props => props.active && css`
     &:before {
@@ -50,6 +54,7 @@ const RadioCircle = styled.span`
       transform: translate(-50%, -50%);
     }
   `} 
+  
 `;
 
 const RadioComponent = ({ id, name, label = "", value, setValue, selectedValue = "" }) => {

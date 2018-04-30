@@ -5,6 +5,7 @@ import {
 } from '@storybook/react';
 
 import TextInput from './TextInput';
+import { lightGrayRoundedTextInputTheme } from './TextInputThemes';
 
 storiesOf('Form', module)
   .addWithChapters(
@@ -97,7 +98,7 @@ storiesOf('Form', module)
                 <TextInput
                   label="Label"
                   helper="Helper text."
-                  name="sixth"
+                  name="text_input_closed_without_value"
                   collapsed />
               )
             },
@@ -108,7 +109,7 @@ storiesOf('Form', module)
                   label="Label"
                   helper="Helper text."
                   error={"This field is required."}
-                  name="sixth"
+                  name="text_input_closed_error"
                   collapsed />
               )
             },
@@ -117,7 +118,7 @@ storiesOf('Form', module)
               sectionFn: () => (
                 <TextInput
                   label="Search"
-                  name="seven"
+                  name="text_input_search"
                   onChange={action('value')}
                   search
                 />
@@ -128,7 +129,7 @@ storiesOf('Form', module)
               sectionFn: () => (
                 <TextInput
                   label="Search"
-                  name="seven"
+                  name="text_input_with_options"
                   onChange={action('value')}
                   options={[
                     {
@@ -257,6 +258,45 @@ storiesOf('Form', module)
                 />
               )
             },
+            {
+              title: 'Example: text input with lightGrayRoundedTextInputTheme theme',
+              sectionFn: () => (
+                <TextInput
+                  label="Hello world"
+                  value="hi"
+                  name="lightGrayRoundedTextInputTheme"
+                  theme={lightGrayRoundedTextInputTheme}
+                  onChange={action('value')}
+                />
+              )
+            },
+            {
+              title: 'Example: text input without label and lightGrayRoundedTextInputTheme theme',
+              sectionFn: () => (
+                <TextInput
+                  label=""
+                  value={1}
+                  name="noLabel"
+                  inputType="number"
+                  theme={lightGrayRoundedTextInputTheme}
+                  onChange={action('value')}
+                />
+              )
+            },
+            {
+              title: 'Example: disabled text input without label and lightGrayRoundedTextInputTheme theme',
+              sectionFn: () => (
+                <TextInput
+                  label=""
+                  value={2}
+                  name="no_label_disabled"
+                  disabled
+                  inputType="number"
+                  theme={lightGrayRoundedTextInputTheme}
+                  onChange={action('value')}
+                />
+              )
+            }
           ]
         }
       ]

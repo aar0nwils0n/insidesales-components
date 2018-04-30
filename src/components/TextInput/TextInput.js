@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { get, filter } from 'lodash';
 
-import { SearchMaterialIcon } from '../icons';
+import Icons from '../icons';
 import { colors, typography, darkScrollbar } from '../styles';
 import SelectOptions from '../SelectInput/SelectOptions';
 import {
@@ -174,7 +174,7 @@ export const TextInputError = styled(TextInputHelper)`
   color: ${colors.red};
 `;
 
-const SearchIcon = styled(SearchMaterialIcon)`
+const SearchIcon = styled(Icons.SearchMaterialIcon)`
   position: absolute;
   top: 22px;
   left: 0;
@@ -326,8 +326,20 @@ class TextInput extends React.Component {
       : [];
   }
 
+  getInputType (inputType) {
+    switch(inputType) {
+      case 'password': {
+        return inputType;
+      }
+      default: {
+        return 'text';
+      }
+    }
+  }
+
   render() {
-    const { label, name, error, disabled, collapsed, className, options, promotedOptions, lowPadding, labelColor, lineColor } = this.props;
+    const { label, name, inputType, error, disabled, collapsed, className, options, promotedOptions, lowPadding, labelColor, lineColor } = this.props;
+
     return (
       <TextInputWrapper
         className={className}
@@ -344,7 +356,7 @@ class TextInput extends React.Component {
           lineColor={lineColor}
           collapsed={collapsed}>
           <InputItem
-            type='text'
+            type={this.getInputType(inputType)}
             onFocus={this.focused}
             onBlur={this.blurred}
             id={name}
@@ -389,6 +401,7 @@ TextInput.defaultProps = {
 TextInput.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  inputType: PropTypes.string,
   helper: PropTypes.string,
   error: PropTypes.string,
   disabled: PropTypes.bool,

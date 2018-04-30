@@ -205,8 +205,10 @@ class SelectInput extends React.Component {
             optionsCount={this.countOptions()}
             searchable={this.props.searchable}
             onSearch={this.filterOptions}
+            width={this.props.selectOptionsWidth}
             visible={this.state.optionsListVisible}
-            multiSelect={this.props.multiSelect} />
+            multiSelect={this.props.multiSelect}
+            bottomActionArea={this.props.bottomActionArea}/>
         </SelectWrapper>
       </ThemeProvider>
     );

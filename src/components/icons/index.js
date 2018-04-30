@@ -57,8 +57,13 @@ import SkipIcon from './SkipIcon';
 import TaskIcons from './TaskIcons';
 import TemplateIcon from './TemplateIcon';
 import TrashIcon from './TrashIcon';
+import ImportIcon from './ImportIcon';
+import InfoOutlineIcon from './InfoOutlineIcon';
+import StarFilledIcon from './StarFilledIcon';
+import TagsIcon from './TagsIcon';
+import TeamsIcon from './TeamsIcon';
 
-module.exports = {
+export default {
   AddCircleIcon,
   AddIcon,
   ArrowBack,
@@ -118,4 +123,9 @@ module.exports = {
   TaskIcons,
   TemplateIcon,
   TrashIcon,
+  ImportIcon,
+  InfoOutlineIcon,
+  StarFilledIcon,
+  TagsIcon,
+  TeamsIcon
 };

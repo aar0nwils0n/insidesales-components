@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 
 import { colors } from '../styles/colors';
 import { typography } from '../styles/typography';
+
 const size = 16;
 
 const RadioLabel = styled.label`
@@ -11,7 +12,7 @@ const RadioLabel = styled.label`
   background: ${props => props.theme.background};
   color: ${colors.black50};
   display: block;
-  padding: 0.75em;
+  padding: ${props => props.theme.padding || '0.75em'};
   margin: ${props => props.theme.margin} 0;
   
   ${props => props.active && css`
@@ -54,7 +55,6 @@ const RadioCircle = styled.span`
       transform: translate(-50%, -50%);
     }
   `} 
-  
 `;
 
 const RadioComponent = ({ id, name, label = "", value, setValue, selectedValue = "" }) => {
@@ -78,7 +78,7 @@ const RadioComponent = ({ id, name, label = "", value, setValue, selectedValue =
 RadioComponent.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  label: PropTypes.string,
+  label: PropTypes.any,
   selectedValue: PropTypes.any,
   value: PropTypes.any.isRequired,
   setValue: PropTypes.func.isRequired

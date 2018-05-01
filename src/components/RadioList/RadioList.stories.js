@@ -62,17 +62,17 @@ storiesOf('Form', module)
                 {
                   value: 1,
                   id: 'radio-1',
-                  label: 'radio 1'
+                  label: <p style={{'display': 'inline-block'}}>radio 1</p>
                 },
                 {
                   value: 2,
                   id: 'radio-2',
-                  label: 'radio 2'
+                  label: <p style={{'display': 'inline-block'}}>radio 2</p>
                 },
                 {
                   value: 3,
                   id: 'radio-3',
-                  label: 'radio 3'
+                  label: <p style={{'display': 'inline-block'}}>radio 3</p>
                 },
               ];
               

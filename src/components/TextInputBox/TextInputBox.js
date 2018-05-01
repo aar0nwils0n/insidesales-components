@@ -63,6 +63,15 @@ const TextBoxLabel = styled(TextLabel)`
     }};
 `;
 
+
+const InputBoxItem = styled(InputItem)`
+    &[type=number]::-webkit-inner-spin-button, 
+    &[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none; 
+        margin: 0; 
+    }
+`
+
 export default class TextInputBox extends TextInput {
     render() {
         const { label, name, inputType, error, disabled, collapsed, className, options, promotedOptions, lowPadding, labelColor, lineColor } = this.props;
@@ -82,7 +91,7 @@ export default class TextInputBox extends TextInput {
                 lineColor={lineColor}
                 collapsed={collapsed}
                 label={label}>
-            <InputItem
+            <InputBoxItem
                 type={this.getInputType(inputType)}
                 onFocus={this.focused}
                 onBlur={this.blurred}

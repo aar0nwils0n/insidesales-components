@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { get, filter } from 'lodash';
+import _ from 'lodash';
 
 import Icons from '../icons';
 import { colors, typography, darkScrollbar } from '../styles';
@@ -14,7 +15,7 @@ import {
   toggleOptionsList
 } from '../SelectInput';
 
-const TextInputWrapper = styled.div`
+export const TextInputWrapper = styled.div`
   width: 100%;
   position: relative;
 `;
@@ -129,6 +130,9 @@ export const InputItem = styled.input`
   }
   ${typography.subhead1}
   ${darkScrollbar}
+  &::placeholder {
+    color: ${colors.black30};
+  }
 `;
 
 export const TextLabel = styled.label`
@@ -187,7 +191,7 @@ class TextInput extends React.Component {
     this.state = {
       focused: false,
       optionsListVisible: false,
-      value: ""
+      value: this.props.value || ''
     };
   }
 
@@ -326,15 +330,13 @@ class TextInput extends React.Component {
       : [];
   }
 
-  getInputType (inputType) {
-    switch(inputType) {
-      case 'password': {
-        return inputType;
-      }
-      default: {
-        return 'text';
-      }
-    }
+  getInputType = (inputType) => ['text', 'password', 'number'].indexOf(inputType) > -1 ? inputType : 'text'
+
+  usePlaceholder = () => {
+    if (_.isEmpty(this.props.label) || this.props.label === DEFAULT_LABEL) {
+      return this.props.placeholder;
+    };
+    return '';
   }
 
   render() {
@@ -366,7 +368,8 @@ class TextInput extends React.Component {
             value={this.state.value}
             ref={(input) => { this.textInputEl = ReactDOM.findDOMNode(input); }}
             onChange={this.onChange}
-            search={this.props.search} />
+            search={this.props.search}
+            placeholder={this.usePlaceholder()} />
           {this.props.search &&
             <SearchIcon fill={colors.dustyGray} size={{ width: 22, height: 22 }} />
           }
@@ -393,9 +396,11 @@ class TextInput extends React.Component {
   }
 }
 
+const DEFAULT_LABEL = 'Label';
+
 TextInput.defaultProps = {
   name: 'Name',
-  label: 'Label'
+  label: DEFAULT_LABEL
 };
 
 TextInput.propTypes = {

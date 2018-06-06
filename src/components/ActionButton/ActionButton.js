@@ -107,6 +107,8 @@ class ActionButton extends React.Component {
         toggled={this.props.toggled}
         isAddIcon={isAddIcon}
         disabled={this.props.disabled}
+        className={this.props.className}
+        title={this.props.title}
       >
         <Icon />
         {!isAddIcon &&

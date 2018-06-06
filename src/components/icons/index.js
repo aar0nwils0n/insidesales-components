@@ -18,6 +18,8 @@ import CloseFullIcon from './CloseFullIcon';
 import CloseIcon from './CloseIcon';
 import CogIcon from './CogIcon';
 import CollapseIcon from './CollapseIcon';
+import ColoredMicrosoftIcon from './ColoredMicrosoftIcon';
+import ColoredSalesforceIcon from './ColoredSalesforceIcon';
 import CompanyIcon from './CompanyIcon';
 import CRMIcon from './CRMIcon';
 import DeleteIcon from './DeleteIcon';
@@ -45,6 +47,7 @@ import MinimizeIcon from './MinimizeIcon';
 import MinusIcon from './MinusIcon';
 import MoreVertIcon from './MoreVertIcon';
 import MoveIcon from './MoveIcon';
+import NeuralIcon from './NeuralIcon';
 import NotificationBellIcon from './NotificationBellIcon';
 import OtherFilledIcon from './OtherFilledIcon';
 import PauseCircleIcon from './PauseCircleIcon';
@@ -86,6 +89,8 @@ export default {
   CloseIcon,
   CogIcon,
   CollapseIcon,
+  ColoredMicrosoftIcon,
+  ColoredSalesforceIcon,
   CompanyIcon,
   CRMIcon,
   DeleteIcon,
@@ -113,6 +118,7 @@ export default {
   MicrosoftIcon,
   MinimizeIcon,
   MoreVertIcon,
+  NeuralIcon,
   NotificationBellIcon,
   OtherFilledIcon,
   PauseCircleIcon,

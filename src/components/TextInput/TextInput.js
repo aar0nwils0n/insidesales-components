@@ -140,7 +140,7 @@ export const TextLabel = styled.label`
       if (props.error) {
         return colors.red;
       } else if (props.isFocused) {
-        return colors.green;
+        return props.theme.focusedColor || colors.green;
       } else if (props.labelColor) {
         return props.labelColor;
       } else {
@@ -222,7 +222,9 @@ class TextInput extends React.Component {
   }
   
   handleCursorPositionChange = () =>  {
-    this.props.onSelectionStartChange(this.textInputEl.selectionStart)
+    if(this.props.onSelectionStartChange) {
+      this.props.onSelectionStartChange(this.textInputEl.selectionStart);
+    }
   }
 
   focused = () => {

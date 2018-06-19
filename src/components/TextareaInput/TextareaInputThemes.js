@@ -1,4 +1,4 @@
-import { colors } from '../styles';
+import { colors } from "../styles/colors";
 
 export const darkTheme = {
   background: colors.darkBlue,
@@ -8,6 +8,9 @@ export const darkTheme = {
 }
 
 export const defaultTheme = {
-  background: colors.grayA,
+  background: colors.white,
+  valueColor: colors.black,
+  labelColor: colors.black60,
   borderColor: colors.black40
 }
+ 	 

@@ -17,6 +17,7 @@ export {default as SortableList} from './SortableList';
 export {default as StepChain} from './StepChain';
 export {default as TextareaInput} from './TextareaInput';
 export {default as TextInput} from './TextInput';
+export {default as SearchBox} from './SearchBox';
 export {
   default as TextInputBox,
   darkTheme as TextInputBoxDarkTheme

@@ -152,6 +152,7 @@ storiesOf('Components', module)
                     arrowY={'calc(100% - 17px)'}
                     dialogBottomInner
                     dialogRightOuter
+                    padding={'2px 20px'}
                     >
                         <Title>Hello World</Title>
                     </Thumbnail>

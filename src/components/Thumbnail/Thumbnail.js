@@ -10,7 +10,7 @@ const Box = styled.div`
     border-radius: 4px;
     background: white;
     box-shadow: ${boxShadows.lvl6};
-    padding: 15px;
+    padding: ${props => props.padding || '15px'};
 
     ${props => props.dialogYCenter && `
         top: 50%;
@@ -127,7 +127,8 @@ const Thumbnail = (props) =>
         'dialogBottomOuter',
         'dialogTopOuter',
         'dialogBottomInner',
-        'dialogTopInner'
+        'dialogTopInner',
+        'padding'
         ])}>
         <Arrow {..._.pick(props, [
             'arrowXCenter',

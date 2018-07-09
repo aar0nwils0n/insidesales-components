@@ -3,6 +3,8 @@ import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import _ from 'lodash';
 
+import { isValued } from './utils';
+
 import { checkDocumentEvent, openOptionsList, closeOptionsList, toggleOptionsListOnSearch } from '../SelectInput';
 import SelectOptions from '../SelectInput/SelectOptions';
 import { colors } from '../styles/colors';
@@ -12,7 +14,12 @@ import PropTypes from 'prop-types';
 const padding = '16px';
 
 export const Label = styled.div`
-  color: ${props => props.theme.labelColor || colors.black40};
+  color: ${props => {
+    if (props.error) {
+      return colors.red;
+    }
+    return props.theme.labelColor || colors.black40;
+  }};
   transition: all 200ms;
   transform: translateY(-50%);
   position: absolute;
@@ -25,7 +32,7 @@ export const Label = styled.div`
   }};
   top: 50%;
 
-  ${props => props.value && `
+  ${props => isValued(props.value) && `
     top: 30%;
     ${typography.caption}
   `}
@@ -68,6 +75,10 @@ export const Value = styled.div`
   text-align: left;
   ${typography.subhead1};
   color: ${(props) => {
+    if (props.error) {
+      return colors.red;
+    }
+
     if (props.isPlaceHolder) {
       return colors.black60;
     }
@@ -105,9 +116,9 @@ export const Value = styled.div`
   border-bottom-color: ${props => {
     if (props.isDisabled){
       return 'transparent';
-    }
-
-    if (props.theme.borderColor) {
+    } else if (props.error) {
+      return colors.red;
+    } else if (props.theme.borderColor) {
       return props.theme.borderColor;
     }
 
@@ -127,7 +138,12 @@ export const Value = styled.div`
 
   &:focus {
     outline: 0;
-    border-color: ${props => props.isDisabled ? 'transparent' : colors.green};
+    border-color: ${props => {
+      if (props.error) {
+        return colors.red;
+      }
+      return props.isDisabled ? 'transparent' : colors.green
+    }};
   }
 `;
 
@@ -266,18 +282,18 @@ export default class SelectInputLabelBox extends React.Component {
               className="select-input-label-box-value"
             >{optionLabel}</Value>
           </SelectToggle>
-            <SelectOptions
-              selectedOptions={this.props.value}
-              promotedOptions={promotedOptions}
-              onOptionUpdate={this.onChange}
-              options={options}
-              hideDivider={_.isEmpty(this.props.options)}
-              visible={this.state.optionsListVisible}
-              multiSelect={this.props.multiSelect}
-              maxHeight="240px"
-              searchable={this.props.searchable}
-              onSearch={this.filterOptions}
-            />
+          <SelectOptions
+            selectedOptions={this.props.value}
+            promotedOptions={promotedOptions}
+            onOptionUpdate={this.onChange}
+            options={options}
+            hideDivider={_.isEmpty(this.props.options)}
+            visible={this.state.optionsListVisible}
+            multiSelect={this.props.multiSelect}
+            maxHeight="240px"
+            searchable={this.props.searchable}
+            onSearch={this.filterOptions}
+          />
         </Wrapper>
       </ThemeProvider>
     )
@@ -289,7 +305,8 @@ SelectInputLabelBox.defaultProps = {
   label: '',
   isDisabled: false,
   theme: {},
-  isPlaceHolder: false
+  isPlaceHolder: false,
+  error: false
 }
 
 SelectInputLabelBox.propTypes = {
@@ -303,5 +320,6 @@ SelectInputLabelBox.propTypes = {
   isDisabled: PropTypes.bool,
   isPlaceHolder: PropTypes.bool,
   multiSelect: PropTypes.bool,
-  searchable: PropTypes.bool
+  searchable: PropTypes.bool,
+  error: PropTypes.bool
 }

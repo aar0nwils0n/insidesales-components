@@ -90,7 +90,7 @@ export const Value = styled.div`
     return colors.black90;
   }};
   height: 56px;
-  padding: 22px ${padding} 0 ${(props) => {
+  padding: 22px 24px 0 ${(props) => {
     if (props.theme.leftDisplayPosition) {
       return props.theme.leftDisplayPosition;
     }
@@ -288,7 +288,7 @@ export default class SelectInputLabelBox extends React.Component {
             promotedOptions={promotedOptions}
             onOptionUpdate={this.onChange}
             options={options}
-            width={this.props.optionsWidth}	
+            width={this.props.optionsWidth}
             hideDivider={_.isEmpty(this.props.options)}
             visible={this.state.optionsListVisible}
             multiSelect={this.props.multiSelect}

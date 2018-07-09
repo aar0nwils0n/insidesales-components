@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { colors } from '../styles';
 import TextInput, { TextInputWrapper, InputItem, TextLabel } from '../TextInput/TextInput';
 import { defaultTheme } from './TextInputBoxThemes';
+import { hasValue } from './utils';
 
 const TextBox = styled.div`
     background-color: ${props => props.theme.background};
@@ -39,7 +40,7 @@ const TextBox = styled.div`
     width: 100%;
     padding-left: 16px;
     padding-right: 16px;
-    padding-bottom: ${props => props.label ? '10px' : '18px'};
+    padding-bottom: ${props => props.label ? '9px' : '17px'};
 
     ${(props) => {
         if (props.disabled) {
@@ -114,7 +115,7 @@ export default class TextInputBox extends TextInput {
                     <TextBoxLabel 
                         isFocused={this.state.focused} 
                         labelColor={this.props.theme.labelColor || labelColor} 
-                        open={this.getValue()} 
+                        open={hasValue(this.getValue())} 
                         htmlFor={name} 
                         error={error}>{label}
                     </TextBoxLabel>
@@ -137,9 +138,9 @@ TextInput.propTypes = {
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     inputType: PropTypes.string,
-    error: PropTypes.string,
+    error: PropTypes.any,
     disabled: PropTypes.bool,
-    value: PropTypes.string,
+    value: PropTypes.any,
     onChange: PropTypes.func,
     collapsed: PropTypes.bool,
 };

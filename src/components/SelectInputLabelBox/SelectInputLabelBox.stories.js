@@ -194,6 +194,7 @@ storiesOf('Form', module)
             sectionFn: () => (
               <div>
                 <SelectInputLabelBox
+                  label="Hello world"
                   options={htmlOptions}
                   promotedOptions={optionsToPromote}
                   theme={lineSelectInputBoxTransparentTheme} />

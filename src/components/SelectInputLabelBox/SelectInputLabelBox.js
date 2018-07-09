@@ -257,13 +257,14 @@ export default class SelectInputLabelBox extends React.Component {
           >
           <SelectToggle onClick={this.toggleOptionsList}>
             <Caret open={this.state.optionsListVisible} />
-            <Label value={this.props.value}>{this.props.label}</Label>
+            <Label error={this.props.error}value={this.props.value}>{this.props.label}</Label>
             <Value
               open={this.state.optionsListVisible}
               isDisabled={this.props.isDisabled}
               title={optionLabel}
               isPlaceHolder={this.props.isPlaceHolder}
               className="select-input-label-box-value"
+              error={this.props.error}
             >{optionLabel}</Value>
           </SelectToggle>
             <SelectOptions
@@ -271,6 +272,7 @@ export default class SelectInputLabelBox extends React.Component {
               promotedOptions={promotedOptions}
               onOptionUpdate={this.onChange}
               options={options}
+              width={this.props.optionsWidth}	
               hideDivider={_.isEmpty(this.props.options)}
               visible={this.state.optionsListVisible}
               multiSelect={this.props.multiSelect}

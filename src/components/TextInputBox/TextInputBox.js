@@ -204,10 +204,7 @@ TextInput.propTypes = {
     value: PropTypes.any,
     onChange: PropTypes.func,
     collapsed: PropTypes.bool,
-<<<<<<< HEAD
-    inert: PropTypes.bool
-};
-=======
+    inert: PropTypes.bool,
     promotedOptions: PropTypes.arrayOf(PropTypes.shape({
         value: PropTypes.any,
         label: PropTypes.string,
@@ -220,4 +217,3 @@ TextInput.propTypes = {
     })),
     placeholder: PropTypes.string,
 };
->>>>>>> master

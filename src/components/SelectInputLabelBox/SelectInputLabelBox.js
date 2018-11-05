@@ -2,7 +2,7 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import _ from 'lodash';
-
+import { RequiredText } from '../RequiredText/RequiredText';
 import { isValued } from './utils';
 
 import { checkDocumentEvent, openOptionsList, closeOptionsList, toggleOptionsListOnSearch } from '../SelectInput';
@@ -74,11 +74,10 @@ export const Value = styled.div`
   width: 100%;
   text-align: left;
   ${typography.subhead1};
-  color: ${(props) => {
+  color: ${props => {
     if (props.error) {
       return colors.red;
     }
-
     if (props.isPlaceHolder) {
       return colors.black60;
     }
@@ -90,7 +89,7 @@ export const Value = styled.div`
     return colors.black90;
   }};
   height: 56px;
-  padding: 22px ${padding} 0 ${(props) => {
+  padding: 22px 26px 0 ${(props) => {
     if (props.theme.leftDisplayPosition) {
       return props.theme.leftDisplayPosition;
     }
@@ -132,7 +131,7 @@ export const Value = styled.div`
 
     return '2px';
   }};
-  white-space: nowrap; 
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 
@@ -225,6 +224,15 @@ export default class SelectInputLabelBox extends React.Component {
     }
   }
 
+  renderRequiredText = () => {
+    const { required, value } = this.props;
+    const message = "Required";
+
+    if (!value && !_.isBoolean(value) && !this.state.optionsListVisible && required) {
+      return (<RequiredText>{message}{required}</RequiredText>);
+    }
+  }
+
   determineLabel = () => {
     const { defaultLabel, options, promotedOptions, value, multiSelect } = this.props;
 
@@ -283,12 +291,13 @@ export default class SelectInputLabelBox extends React.Component {
               error={this.props.error}
             >{optionLabel}</Value>
           </SelectToggle>
+          {this.renderRequiredText()}
           <SelectOptions
             selectedOptions={this.props.value}
             promotedOptions={promotedOptions}
             onOptionUpdate={this.onChange}
             options={options}
-            width={this.props.optionsWidth}	
+            width={this.props.optionsWidth}
             hideDivider={_.isEmpty(this.props.options)}
             visible={this.state.optionsListVisible}
             multiSelect={this.props.multiSelect}

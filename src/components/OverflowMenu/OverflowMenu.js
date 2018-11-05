@@ -18,7 +18,8 @@ const SelectOption = styled.div`
   transition: background .25s ease-in-out;
 
   ${typography.subhead1}
-  color: ${colors.selectItemColor};
+  color: ${props => props.isDisabled ? colors.grayC : colors.selectItemColor};
+  background: ${props => props.isHighlighted ? colors.hoverGray : colors.white};
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -33,8 +34,8 @@ const SelectOption = styled.div`
   }
 
   &:hover {
-    background: ${colors.hoverGray};
-    color: ${colors.selectItemColor};
+    background: ${props => props.isDisabled ? colors.white : colors.hoverGray};
+    color: ${props => props.isDisabled ? colors.grayC : colors.selectItemColor};
   };
 `;
 
@@ -81,13 +82,17 @@ const OptionsContainer = styled.div`
 `;
 
 const OptionsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 100%;
   align-items: flex-start;
   background-color: ${colors.white};
   border-radius: 2px;
   box-shadow: ${boxShadows.lvl20};
+`;
+
+const SubmenuOptionsWrapper = styled.div`
+  display: flex;
+  background-color: ${colors.white};
+
 `;
 
 const OverflowWrapper = styled.div`
@@ -104,7 +109,8 @@ class OverflowMenu extends React.Component {
     openRight: PropTypes.bool,
     options: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired,
-    icon: PropTypes.element
+    icon: PropTypes.element,
+    stayOpen: PropTypes.bool
   };
 
   static defaultProps = {
@@ -114,17 +120,19 @@ class OverflowMenu extends React.Component {
     options: [],
     onChange: value => value,
     icon: <Icons.MoreVertIcon
-            className="overflow-menu__icon"
-            fill={colors.white80}
-            size={{ width: 24, height: 24 }}
-          />
+      className="overflow-menu__icon"
+      fill={colors.white80}
+      size={{ width: 24, height: 24 }}
+    />,
+    stayOpen: false
   };
 
   constructor() {
     super();
 
     this.state = {
-      menuVisible: false
+      menuVisible: false,
+      selectedIds: []
     };
   }
 
@@ -154,33 +162,73 @@ class OverflowMenu extends React.Component {
 
   closeMenu = () => {
     document.removeEventListener('click', this.checkDocumentEvent);
-    this.setState({ menuVisible: false });
+    this.setState({
+      menuVisible: false,
+      selectedIds: []
+    });
   }
 
-  renderMenu = () => {
-    const { options } = this.props;
+  handleSelectedId = (selected, depthLevel) => {
+    return () => {
+      const updatedArray = this.state.selectedIds.slice(0);
+
+      updatedArray[depthLevel] = selected;
+
+      this.setState({
+        selectedIds: updatedArray
+      })
+    }
+  }
+
+  renderMenu = (options, depthLevel = 0) => {
+    const menu = options.map((option, idx) => {
+      const positionText = {position: 'absolute', left: '101%',  width: 'auto'}
+      const mainMenu = <SelectOption
+        key={idx}
+        onMouseEnter={this.handleSelectedId(option.id, depthLevel)}
+        onClick={option.isDisabled ? ()=> {} : option.action}
+        isHighlighted={option.isHighlighted}
+        isDisabled={option.isDisabled}>{option.label}</SelectOption>
+
+      let submenu;
+      if (this.state.selectedIds[depthLevel] === option.id && _.get(option,'subOptions.length',0) > 0) {
+        const newDepthLevel = depthLevel + 1;
+        submenu = this.renderMenu(option.subOptions, newDepthLevel);
+      }
+      return (
+        <SubmenuOptionsWrapper>
+          <OptionsWrapper >
+            {mainMenu}
+          </OptionsWrapper>
+          {!_.isUndefined(submenu) &&
+            <OptionsWrapper style={positionText}>
+              {submenu}
+            </OptionsWrapper>
+          }
+        </SubmenuOptionsWrapper>
+      )
+    }
+    );
     return (
-      options.map((option, idx) => (
-        <SelectOption key={idx} onClick={option.action}>{option.label}</SelectOption>
-        ))
+      <div>
+        {menu}
+      </div>
     );
   }
 
   render() {
     return (
       <OverflowWrapper
-      {...this.props}
-      ref={(el) => { this.clickEventElement = el }}>
+        {...this.props}
+        ref={(el) => { this.clickEventElement = el }}>
         <InteractiveElement onClick={() => { this.toggleMenu(); }}>
           {this.props.icon}
         </InteractiveElement>
-        {this.state.menuVisible &&
+        {(this.state.menuVisible || this.props.stayOpen) &&
           <OptionsContainer openUp={this.props.openUp} openRight={this.props.openRight}>
-            <OptionsWrapper>
-              {this.renderMenu()}
-            </OptionsWrapper>
-          </OptionsContainer>
-        }
+            {this.renderMenu(this.props.options)}
+          </OptionsContainer>}
+
       </OverflowWrapper>
     );
   }

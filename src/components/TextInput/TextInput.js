@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { get, filter } from 'lodash';
 import _ from 'lodash';
+import { RequiredText } from '../RequiredText/RequiredText';
 
 import Icons from '../icons';
 import { colors, typography, darkScrollbar } from '../styles';
@@ -48,6 +49,10 @@ const Caret = styled.div`
 `;
 
 export const TextBox = styled.div`
+  border: ${(props) => {
+    return props.outlinedSearch ? "1px solid rgba(0,0,0,0.4)" : 'none'
+  }};
+  border-radius: 3px;
   background-color: ${colors.white};
   border-bottom: thin solid ${colors.black40};
   border-color: ${(props) => {
@@ -169,7 +174,9 @@ export const TextLabel = styled.label`
 `;
 
 export const TextInputHelper = styled.div`
-  color: ${colors.black40};
+   color: ${(props) => {
+     return props.theme.helperColor || colors.black40;
+  }};
   padding-top: 4px;
   ${typography.caption}
 `;
@@ -220,7 +227,7 @@ class TextInput extends React.Component {
       });
     }
   }
-  
+
   handleCursorPositionChange = () =>  {
     if(this.props.onSelectionStartChange) {
       this.props.onSelectionStartChange(this.textInputEl.selectionStart);
@@ -261,7 +268,17 @@ class TextInput extends React.Component {
     if (error) {
       return (<TextInputError>{error}</TextInputError>);
     }
+
     return (<TextInputHelper>{helper}</TextInputHelper>);
+  }
+
+  renderRequiredText = () => {
+    const { required, collapsed } = this.props;
+    const message = "Required";
+
+    if (!this.state.focused && !this.getValue() && !collapsed && required) {
+      return (<RequiredText>{message}{required}</RequiredText>);
+    }
   }
 
   focusOnTextInput = () => {
@@ -419,6 +436,7 @@ class TextInput extends React.Component {
         </TextBox>
         { options && <Caret onClick={this.toggleOptionsList} open={this.state.optionsListVisible} className={'pb-caret'} />}
         {this.renderHelperText()}
+        {this.renderRequiredText()}
         { options && <SelectOptions
           onOptionUpdate={this.onDropDownSelect}
           promotedOptions={promotedOptions || this.getPromotedOptions() }
@@ -450,6 +468,7 @@ TextInput.propTypes = {
   label: PropTypes.string.isRequired,
   inputType: PropTypes.string,
   helper: PropTypes.string,
+  required: PropTypes.bool,
   error: PropTypes.any,
   disabled: PropTypes.bool,
   value: PropTypes.string,

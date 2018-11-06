@@ -15,6 +15,7 @@ const RadioLabel = styled.label`
   align-items: center;
   width: 100%;
   color: ${colors.black60};
+  cursor: pointer;
   padding: ${props => {
     if (!_.isEmpty(props.label.super) && !_.isEmpty(props.label.main) && !_.isEmpty(props.theme.padding)) {
       return `6px ${props.theme.padding} 4px ${props.theme.padding}`;

@@ -80,6 +80,7 @@ import PhoneIcon from './PhoneIcon';
 import PlaybookIcon from './PlaybookIcon';
 import PlayIcon from './PlayIcon';
 import PlusIcon from './PlusIcon';
+import QueueMusicIcon from './QueueMusicIcon';
 import RadioboxBlankIcon from './RadioboxBlankIcon';
 import RadioboxMarkedIcon from './RadioboxMarkedIcon';
 import RefreshIcon from './RefreshIcon';
@@ -105,6 +106,8 @@ import VoicemailIcon from './VoicemailIcon';
 import Notes from './Notes';
 import CallForward from './CallForward';
 import ArrowForward from './ArrowForward';
+import HeadsetMicOffIcon from './HeadsetMicOffIcon.js';
+import HeadsetMicOnIcon from './HeadsetMicOnIcon.js';
 
 export default {
   AddCircleIcon,
@@ -191,6 +194,7 @@ export default {
   PlaybookIcon,
   PlayIcon,
   PlusIcon,
+  QueueMusicIcon,
   RadioboxBlankIcon,
   RadioboxMarkedIcon,
   RefreshIcon,
@@ -213,5 +217,7 @@ export default {
   VoicemailIcon,
   Notes,
   CallForward,
-  ArrowForward
+  ArrowForward,
+  HeadsetMicOffIcon,
+  HeadsetMicOnIcon
 };

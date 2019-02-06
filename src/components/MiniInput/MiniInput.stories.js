@@ -20,6 +20,7 @@ class StateFullWrapper extends React.Component {
             }}
             value={this.state.value}
             onEnter={this.props.onEnter}
+            type={'number'}
         />
     }
 }

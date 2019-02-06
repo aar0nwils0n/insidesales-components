@@ -12,9 +12,16 @@ const StyledMiniInput = styled.input`
     padding-left: 8px;
     padding-right: 8px;
     outline: 0;
+    text-align: center;
     background: transparent;
     box-sizing: border-box;
     border: 1px solid ${props => props.theme.borderColor};
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
     &:focus {
         color: ${colors.green};
         border-color: ${colors.green};
@@ -22,10 +29,11 @@ const StyledMiniInput = styled.input`
     ${typography.body2}
 `;
 
-const MiniInput = ({theme, value, onChange, onEnter}) =>
+const MiniInput = ({theme, value, onChange, onEnter, type}) =>
     <StyledMiniInput
         theme={theme}
         value={value}
+        type={type}
         onKeyPress={(e) => {
             e.stopPropagation();
             if (e.key === 'Enter') {

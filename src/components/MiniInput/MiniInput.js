@@ -34,7 +34,7 @@ const MiniInput = ({theme, value, onChange, onEnter, type}) =>
         theme={theme}
         value={value}
         type={type}
-        onKeyPress={(e) => {
+        onKeyUp={(e) => {
             e.stopPropagation();
             if (e.key === 'Enter') {
             onEnter();

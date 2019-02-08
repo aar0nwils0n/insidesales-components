@@ -16,10 +16,7 @@ const StyledMiniInput = styled.input`
     background: transparent;
     box-sizing: border-box;
     border: 1px solid ${props => props.theme.borderColor};
-<<<<<<< HEAD
     ${props => props.disabled && `opacity: 0.4;`}
-=======
->>>>>>> d09128ceed2aa66d0d53edfb7831773dd5d2e643
 
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {

@@ -41,7 +41,8 @@ storiesOf('Menus', module)
               sectionFn: () => {
                 const options = [
                   { action: action('click option'), label: 'Option 1' },
-                  { action: action('click option'), label: 'Option 2' }
+                  { action: action('click option'), label: 'Option 2' },
+                  { action: action('click option'), label: 'Option 3' }
                 ];
 
                 return  <DarkBackground><OverflowMenu options={options} /></DarkBackground>

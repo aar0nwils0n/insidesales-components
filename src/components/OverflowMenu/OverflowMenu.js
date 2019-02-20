@@ -25,13 +25,7 @@ const SelectOption = styled.div`
   white-space: nowrap;
   align-items: center;
 
-  &:first-child {
-    margin-top: 8px;
-  }
 
-  &:last-child {
-    margin-bottom: 8px;
-  }
 
   &:hover {
     background: ${props => props.isDisabled ? colors.white : colors.hoverGray};
@@ -93,6 +87,13 @@ const SubmenuOptionsWrapper = styled.div`
   display: flex;
   background-color: ${colors.white};
 
+  &:first-child ${SelectOption} {
+    margin-top: 8px;
+  }
+
+  &:last-child ${SelectOption} {
+    margin-bottom: 8px;
+  }
 `;
 
 const OverflowWrapper = styled.div`

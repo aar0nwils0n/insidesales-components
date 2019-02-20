@@ -99,7 +99,7 @@ storiesOf('Menus', module)
                   { action: action('click option'), label: 'Option 2' }
                 ];
 
-                const icon = <AttachmentIcon fill={colors.white80} size={{ width: 24, height: 24 }} />;
+                const icon = <AttachmentIcon fill={colors.white80} size={{ width: 50, height: 50 }} />;
 
                 return <DarkBackground><OverflowMenu options={options} icon={icon} /></DarkBackground>
               }

@@ -393,6 +393,7 @@ class TextInput extends React.Component {
       className,
       options,
       promotedOptions,
+      maxLength,
       lowPadding,
       labelColor,
       lineColor,
@@ -423,6 +424,7 @@ class TextInput extends React.Component {
             name={name}
             disabled={disabled}
             error={error}
+            maxLength={maxLength}
             value={this.getValue()}
             ref={(input) => { this.textInputEl = ReactDOM.findDOMNode(input); }}
             onChange={this.onChange}
